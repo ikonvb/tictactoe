@@ -4,6 +4,7 @@ public class GameUtil {
 
     public static final String GAME_PLAY = "Gameplay";
     public static final String GAME_RESULT = "GameResult";
+    public static final String ENCODING_XML = "utf-8";
     public static final String DRAW = "Draw";
     public static final String GAME = "Game";
     public static final String PLAYER = "Player";
@@ -23,5 +24,6 @@ public class GameUtil {
     public static final String STRING_DRAW = "It`s a draw!!!";
     public static final String STRING_GAME_OVER = "Game over!!!";
     public static final String STRING_WINNER = "The winner is ";
+
 
 }

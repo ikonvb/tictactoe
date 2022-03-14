@@ -6,8 +6,19 @@ import tictactoexml.model.Step;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-import java.io.FileWriter;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -111,9 +122,12 @@ public class TicTacToe {
     public static void writeGameResultToXml(List<Player> players, List<Step> steps, int gameTry) {
 
         try {
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
             XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
-            XMLStreamWriter writer = outputFactory.createXMLStreamWriter(new FileWriter(FILE_NAME + gameTry + FILE_EXTENSION));
-            writer.writeStartDocument(VERSION);
+            //XMLStreamWriter writer = outputFactory.createXMLStreamWriter(new FileWriter(FILE_NAME + gameTry + FILE_EXTENSION));
+            XMLStreamWriter writer = outputFactory.createXMLStreamWriter(out);
+
+            writer.writeStartDocument(ENCODING_XML, VERSION);
             writer.writeStartElement(GAME_PLAY);
 
             for (Player player : players) {
@@ -156,9 +170,35 @@ public class TicTacToe {
             writer.flush();
             writer.close();
 
-        } catch (IOException | XMLStreamException e) {
+            String xml = out.toString(StandardCharsets.UTF_8);
+
+            String prettyPrintXML = formatXML(xml);
+            //save the game_result file in the root of project
+            Files.writeString(Paths.get(FILE_NAME + gameTry + FILE_EXTENSION), prettyPrintXML, StandardCharsets.UTF_8);
+
+        } catch (IOException | XMLStreamException | TransformerException e) {
             e.printStackTrace();
         }
+
+    }
+
+    private static String formatXML(String xml) throws TransformerException {
+
+        // write data to xml file
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+
+        // pretty print by indention
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+
+        // add standalone="yes", add line break before the root element
+        transformer.setOutputProperty(OutputKeys.STANDALONE, "yes");
+
+        StreamSource source = new StreamSource(new StringReader(xml));
+        StringWriter output = new StringWriter();
+        transformer.transform(source, new StreamResult(output));
+
+        return output.toString();
 
     }
 
