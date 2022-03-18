@@ -1,0 +1,64 @@
+{
+  "players": [
+    {
+      "id": 3,
+      "name": "jjjj",
+      "symbol": "X"
+    },
+    {
+      "id": 4,
+      "name": "hhhh",
+      "symbol": "O"
+    }
+  ],
+  "game": {
+    "steps": [
+      {
+        "num": "1",
+        "playerId": "3",
+        "step": "1"
+      },
+      {
+        "num": "2",
+        "playerId": "4",
+        "step": "2"
+      },
+      {
+        "num": "3",
+        "playerId": "3",
+        "step": "3"
+      },
+      {
+        "num": "4",
+        "playerId": "4",
+        "step": "4"
+      },
+      {
+        "num": "5",
+        "playerId": "3",
+        "step": "7"
+      },
+      {
+        "num": "6",
+        "playerId": "4",
+        "step": "5"
+      },
+      {
+        "num": "7",
+        "playerId": "3",
+        "step": "8"
+      },
+      {
+        "num": "8",
+        "playerId": "4",
+        "step": "9"
+      },
+      {
+        "num": "9",
+        "playerId": "3",
+        "step": "6"
+      }
+    ]
+  },
+  "gameResult": {}
+}
