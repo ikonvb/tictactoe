@@ -11,6 +11,12 @@ public class Player implements Serializable {
     public Player() {
     }
 
+    public Player(int id, String name, String symbol) {
+        this.id = id;
+        this.name = name;
+        this.symbol = symbol;
+    }
+
     public int getId() {
         return id;
     }

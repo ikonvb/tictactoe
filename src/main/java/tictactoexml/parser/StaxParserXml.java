@@ -3,6 +3,7 @@ package tictactoexml.parser;
 import tictactoexml.model.GameResult;
 import tictactoexml.model.Player;
 import tictactoexml.model.Step;
+import tictactoexml.repository.GameDocumentReader;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
@@ -19,7 +20,7 @@ import static tictactoexml.tictactoe.TicTacToe.checkPlayerTurn;
 import static tictactoexml.tictactoe.TicTacToe.showGameBoard;
 import static tictactoexml.util.GameUtil.*;
 
-public class StaxParserXml {
+public class StaxParserXml implements GameDocumentReader {
 
     private final String[][] ticTacToe = initGame();
     private final List<Player> players = new ArrayList<>();
@@ -28,7 +29,8 @@ public class StaxParserXml {
     private final GameResult gameResult = new GameResult();
     private final List<Step> steps = new ArrayList<>();
 
-    public void readXml(String fileName) {
+    @Override
+    public void readGameFile(String fileName) {
         try {
             XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
             XMLEventReader reader = xmlInputFactory.createXMLEventReader(new FileInputStream(fileName));

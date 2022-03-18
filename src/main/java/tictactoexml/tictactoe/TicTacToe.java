@@ -2,6 +2,7 @@ package tictactoexml.tictactoe;
 
 import tictactoexml.model.Player;
 import tictactoexml.model.Step;
+import tictactoexml.repository.GameDocumentWriter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,8 +10,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import static tictactoexml.util.GameUtil.*;
-import static tictactoexml.writers.JsonGameWriter.writeGameResultToJson;
-import static tictactoexml.writers.XmlGameWriter.writeGameResultToXml;
 
 public class TicTacToe {
 
@@ -21,7 +20,7 @@ public class TicTacToe {
     private static int gameTry = 1;
     private static int id = 1;
 
-    public void playTicTacToe() {
+    public void playTicTacToe(GameDocumentWriter writer) {
         Player player1 = new Player();
         Player player2 = new Player();
 
@@ -71,8 +70,7 @@ public class TicTacToe {
 
             showGameBoard(ticTacToe);
             showGameResult();
-            //writeGameResultToXml(players, steps, gameTry, winner);
-            writeGameResultToJson(players, steps, gameTry, winner);
+            writer.writeGameResult(players, steps, gameTry, winner);
             endGame(scanner);
             gameTry++;
         }

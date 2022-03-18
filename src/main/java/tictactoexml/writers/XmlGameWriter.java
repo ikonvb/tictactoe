@@ -2,6 +2,7 @@ package tictactoexml.writers;
 
 import tictactoexml.model.Player;
 import tictactoexml.model.Step;
+import tictactoexml.repository.GameDocumentWriter;
 
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -24,9 +25,10 @@ import java.util.List;
 import static tictactoexml.util.GameUtil.*;
 import static tictactoexml.util.GameUtil.XML_EXTENSION;
 
-public class XmlGameWriter {
+public class XmlGameWriter implements GameDocumentWriter {
 
-    public static void writeGameResultToXml(List<Player> players, List<Step> steps, int gameTry, Player winner) {
+    @Override
+    public void writeGameResult(List<Player> players, List<Step> steps, int gameTry, Player winner) {
 
         try {
             ByteArrayOutputStream out = new ByteArrayOutputStream();
