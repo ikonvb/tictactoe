@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import static tictactoexml.util.GameUtil.*;
+import static tictactoexml.writers.JsonGameWriter.writeGameResultToJson;
 import static tictactoexml.writers.XmlGameWriter.writeGameResultToXml;
 
 public class TicTacToe {
@@ -70,7 +71,8 @@ public class TicTacToe {
 
             showGameBoard(ticTacToe);
             showGameResult();
-            writeGameResultToXml(players, steps, gameTry, winner);
+            //writeGameResultToXml(players, steps, gameTry, winner);
+            writeGameResultToJson(players, steps, gameTry, winner);
             endGame(scanner);
             gameTry++;
         }

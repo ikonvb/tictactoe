@@ -10,11 +10,11 @@ public class PlayGameXml {
 
     public static void main(String[] args) {
         //to start tictactoe game, uncomment this block and comment code block below
-//        TicTacToe ticTacToe = new TicTacToe();
-//        ticTacToe.playTicTacToe();
+        TicTacToe ticTacToe = new TicTacToe();
+        ticTacToe.playTicTacToe();
 
         //to start game from xml file, uncomment this block and comment code block above
-        StaxParserXml saxParserXml = new StaxParserXml();
-        saxParserXml.readXml(fileName);
+//        StaxParserXml saxParserXml = new StaxParserXml();
+//        saxParserXml.readXml(fileName);
     }
 }

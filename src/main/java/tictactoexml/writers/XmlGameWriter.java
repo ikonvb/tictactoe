@@ -22,7 +22,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import static tictactoexml.util.GameUtil.*;
-import static tictactoexml.util.GameUtil.FILE_EXTENSION;
+import static tictactoexml.util.GameUtil.XML_EXTENSION;
 
 public class XmlGameWriter {
 
@@ -80,7 +80,7 @@ public class XmlGameWriter {
 
             String prettyPrintXML = formatXML(xml);
             //save the game_result file in the root of project
-            Files.writeString(Paths.get(FILE_NAME + gameTry + FILE_EXTENSION), prettyPrintXML, StandardCharsets.UTF_8);
+            Files.writeString(Paths.get(FILE_NAME + gameTry + XML_EXTENSION), prettyPrintXML, StandardCharsets.UTF_8);
 
         } catch (IOException | XMLStreamException | TransformerException e) {
             e.printStackTrace();

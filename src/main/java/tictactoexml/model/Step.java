@@ -1,7 +1,9 @@
 package tictactoexml.model;
 
 
-public class Step {
+import java.io.Serializable;
+
+public class Step implements Serializable {
 
     private String num;
 
