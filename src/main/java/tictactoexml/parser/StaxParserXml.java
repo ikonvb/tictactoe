@@ -79,14 +79,14 @@ public class StaxParserXml {
             for (Step step : steps) {
                 System.out.println();
                 if (players.get(0).getId() == Integer.parseInt(step.getPlayerId())) {
-                    System.out.println("step № " + step.getNum() + " " + players.get(0).getName() + " goes to " + step.getStep());
+                    System.out.println("step N " + step.getNum() + " " + players.get(0).getName() + " goes to " + step.getStep());
                     checkPlayerTurn(players.get(0), step.getStep(), ticTacToe);
                     showGameBoard(ticTacToe);
                     Thread.sleep(700);
                 }
 
                 if (players.get(1).getId() == Integer.parseInt(step.getPlayerId())) {
-                    System.out.println("step № " + step.getNum() + " " + players.get(1).getName() + " goes to " + step.getStep());
+                    System.out.println("step N " + step.getNum() + " " + players.get(1).getName() + " goes to " + step.getStep());
                     checkPlayerTurn(players.get(1), step.getStep(), ticTacToe);
                     showGameBoard(ticTacToe);
                     Thread.sleep(700);

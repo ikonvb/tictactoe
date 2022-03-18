@@ -1,6 +1,7 @@
 package tictactoexml.gameplayxml;
 
 import tictactoexml.parser.StaxParserXml;
+import tictactoexml.tictactoe.TicTacToe;
 
 public class PlayGameXml {
 
