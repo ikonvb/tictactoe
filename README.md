@@ -1,13 +1,13 @@
 # Tictactoe
 
 **Описание**  
-Для запуска приложения без участия Spring Boot ищем пакет **gameplayxmljson**, класс **PlayGameXmlJson**.    
+Для запуска приложения без участия Spring Boot нам потребуется класс **PlayGameXmlJson** из пакета **gameplayxmljson**.    
 Через этот класс можно запустить:
 1. Игру с записью результата в файл с расширением xml или json на выбор.
 2. Воспроизвидение игры из файла с расширением xml или json на выбор.    
 
-Для запуска приложения с участием Spring Boot и REST API ищем пакет **com.konstantinbulygin.tictactoexml**, класс **TicTacToeApplication**.
-Для работы с REST API рекомендуется использовать **Postman**.
+Для запуска приложения с участием Spring Boot и REST API нам потребуется класс **TicTacToeApplication** из пакета **com.konstantinbulygin.tictactoexml**.    
+Для работы с REST API рекомендуется использовать [**Postman**](https://www.postman.com/).
 1. Для загрузки файла через REST API имеется endpoint "/upload" - это POST метод.    
    Возвращает стороку и статус *HttpStatus.OK* если все прошло хорошо и *HttpStatus.NOT_ACCEPTABLE* если что-то пошло не так.    
    После успешной загрузки автоматически запускается воспроизведение игры из загруженного файла. Ход игры отображается в консоли.
