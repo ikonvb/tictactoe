@@ -11,7 +11,6 @@ import java.util.Scanner;
 
 import static com.konstantinbulygin.tictactoexml.util.GameUtil.*;
 
-
 public class TicTacToe {
 
     private static Player winner;

@@ -1,7 +1,12 @@
 package com.konstantinbulygin.tictactoexml.gameplayxmljson;
 
 import com.konstantinbulygin.tictactoexml.parser.GameParserJson;
+import com.konstantinbulygin.tictactoexml.parser.GameParserXml;
 import com.konstantinbulygin.tictactoexml.service.GameDocumentReader;
+import com.konstantinbulygin.tictactoexml.service.GameDocumentWriter;
+import com.konstantinbulygin.tictactoexml.tictactoe.TicTacToe;
+import com.konstantinbulygin.tictactoexml.writers.JsonGameWriter;
+import com.konstantinbulygin.tictactoexml.writers.XmlGameWriter;
 
 public class PlayGameXmlJson {
 
@@ -20,15 +25,15 @@ public class PlayGameXmlJson {
          * to start tictactoe game, uncomment this block and comment code block below
          */
         //GameDocumentWriter writer = new JsonGameWriter();
-        //GameDocumentWriter writer = new XmlGameWriter();
-        //TicTacToe ticTacToe = new TicTacToe();
-        //ticTacToe.playTicTacToe(writer);
+        GameDocumentWriter writer = new XmlGameWriter();
+        TicTacToe ticTacToe = new TicTacToe();
+        ticTacToe.playTicTacToe(writer);
         /**
          * to replay the game from xml file, please uncomment desired reader
          * please uncomment this block and comment code block above
          */
         //GameDocumentReader reader = new GameParserXml();
-        GameDocumentReader reader = new GameParserJson();
-        reader.readGameFile(jsonFileName);
+        //GameDocumentReader reader = new GameParserJson();
+        //reader.readGameFile(xmlFileName);
     }
 }

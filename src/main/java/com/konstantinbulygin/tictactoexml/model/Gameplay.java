@@ -1,9 +1,8 @@
 package com.konstantinbulygin.tictactoexml.model;
 
-import java.io.Serializable;
 import java.util.List;
 
-public class Gameplay implements Serializable {
+public class Gameplay {
 
     private List<Player> players;
     private Game game;

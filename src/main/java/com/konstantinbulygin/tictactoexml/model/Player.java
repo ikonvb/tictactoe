@@ -1,8 +1,6 @@
 package com.konstantinbulygin.tictactoexml.model;
 
-import java.io.Serializable;
-
-public class Player implements Serializable {
+public class Player {
 
     private int id = 0;
     private String name;

@@ -1,8 +1,6 @@
 package com.konstantinbulygin.tictactoexml.model;
 
-import java.io.Serializable;
-
-public class GameResult implements Serializable {
+public class GameResult {
 
     private Player player;
 

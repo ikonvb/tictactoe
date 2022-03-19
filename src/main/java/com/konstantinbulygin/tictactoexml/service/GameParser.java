@@ -11,7 +11,7 @@ import static com.konstantinbulygin.tictactoexml.util.GameUtil.STRING_WINNER;
 
 public class GameParser {
 
-    private final String[][] ticTacToe = initGame();
+    public final String[][] ticTacToeField = initGame();
 
     public void showGameResult(Gameplay gameplay) {
         if (gameplay.getGameResult().getPlayer() != null) {
@@ -28,17 +28,17 @@ public class GameParser {
             System.out.println("Player name: " + pl.getName() + " symbol is " + pl.getSymbol());
         }
         System.out.println();
-        showGameBoard(ticTacToe);
+        showGameBoard(ticTacToeField);
     }
 
     public void showGameSteps(Gameplay gameplay) {
         for (Step step : gameplay.getGame().getSteps()) {
             gameplay.getPlayers().stream()
                     .filter(player -> player.getId() == Integer.parseInt(step.getPlayerId()))
-                    .filter(player -> checkPlayerTurn(player, step.getStep(), ticTacToe))
+                    .filter(player -> checkPlayerTurn(player, step.getStep(), ticTacToeField))
                     .forEach(pl -> {
                         System.out.println("step N " + step.getNum() + " " + pl.getName() + " goes to " + step.getStep());
-                        showGameBoard(ticTacToe);
+                        showGameBoard(ticTacToeField);
                     });
         }
     }

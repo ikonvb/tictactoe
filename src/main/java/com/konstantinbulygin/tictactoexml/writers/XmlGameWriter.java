@@ -3,6 +3,7 @@ package com.konstantinbulygin.tictactoexml.writers;
 import com.konstantinbulygin.tictactoexml.model.Player;
 import com.konstantinbulygin.tictactoexml.model.Step;
 import com.konstantinbulygin.tictactoexml.service.GameDocumentWriter;
+import org.springframework.stereotype.Component;
 
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -24,7 +25,7 @@ import java.util.List;
 
 import static com.konstantinbulygin.tictactoexml.util.GameUtil.*;
 
-
+@Component
 public class XmlGameWriter implements GameDocumentWriter {
 
     @Override
