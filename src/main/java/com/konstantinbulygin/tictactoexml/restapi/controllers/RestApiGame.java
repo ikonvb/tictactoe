@@ -38,7 +38,12 @@ public class RestApiGame extends GameParser {
             return new ResponseEntity<>(gameField, HttpStatus.BAD_REQUEST);
         }
         if (checkWinner(playerName, gameField)) {
-            return new ResponseEntity<>(new String[][]{new String[]{winner}, new String[]{symbol}}, HttpStatus.OK);
+            if (winner.equals(playerName)) {
+                return new ResponseEntity<>(new String[][]{new String[]{winner}, new String[]{symbol}}, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(new String[][]{new String[]{winner}, null}, HttpStatus.OK);
+            }
+
         }
         return new ResponseEntity<>(gameField, HttpStatus.ACCEPTED);
     }
