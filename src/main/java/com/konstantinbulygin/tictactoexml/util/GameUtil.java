@@ -14,10 +14,10 @@ public class GameUtil {
     public static final String NAME = "name";
     public static final String SYMBOL = "symbol";
     public static final String PLAYER_ID = "playerId";
-    public static final String X = "X";
-    public static final String XXX = "XXX";
-    public static final String O = "O";
-    public static final String OOO = "OOO";
+    public static final String SYMBOL_X = "X";
+    public static final String LINE_XXX = "XXX";
+    public static final String SYMBOL_O = "O";
+    public static final String LINE_OOO = "OOO";
     public static final String VERSION = "1.0";
     public static final String FILE_NAME = "game_result";
     public static final String XML_EXTENSION = ".xml";

@@ -83,7 +83,6 @@ public class GameParserXml extends GameParser implements GameDocumentReader {
                 }
             }
         }
-
         game.setSteps(steps);
         gameplay.setGame(game);
         gameplay.setGameResult(gameResult);

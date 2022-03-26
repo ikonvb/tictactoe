@@ -35,7 +35,7 @@ public class GameParser {
         for (Step step : gameplay.getGame().getSteps()) {
             gameplay.getPlayers().stream()
                     .filter(player -> player.getId() == Integer.parseInt(step.getPlayerId()))
-                    .filter(player -> checkPlayerTurn(player, step.getStep(), ticTacToeField))
+                    .filter(player -> checkPlayerTurn(player, ticTacToeField))
                     .forEach(pl -> {
                         System.out.println("step N " + step.getNum() + " " + pl.getName() + " goes to " + step.getStep());
                         showGameBoard(ticTacToeField);
@@ -43,7 +43,7 @@ public class GameParser {
         }
     }
 
-    public String[][] initGame() {
+    public static String[][] initGame() {
         return new String[][]{
                 {"1", "2", "3"},
                 {"4", "5", "6"},

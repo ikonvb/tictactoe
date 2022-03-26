@@ -1,23 +1,14 @@
 package com.konstantinbulygin.tictactoexml.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Game {
-
     private List<Step> steps;
-
-    public Game() {
-    }
-
-    public Game(List<Step> steps) {
-        this.steps = steps;
-    }
-
-    public List<Step> getSteps() {
-        return steps;
-    }
-
-    public void setSteps(List<Step> steps) {
-        this.steps = steps;
-    }
 }

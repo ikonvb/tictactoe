@@ -9,11 +9,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+import static com.konstantinbulygin.tictactoexml.service.GameParser.initGame;
 import static com.konstantinbulygin.tictactoexml.util.GameUtil.*;
 
 public class TicTacToe {
 
-    private static Player winner;
+    public static Player winner;
     private static String yesOrNot = "y";
     private static boolean gameOver;
     private static int counter = 0;
@@ -33,6 +34,7 @@ public class TicTacToe {
 
             scanner = new Scanner(System.in);
 
+            resetGameValue();
             String[][] ticTacToe = initGame();
 
             initPlayers(player1, player2, scanner, players);
@@ -61,9 +63,9 @@ public class TicTacToe {
     private void getPlayerStepAndCheck(Player player1, Scanner scanner, List<Step> steps, String[][] ticTacToe) {
         String playerStep;
         playerStep = takePlayerStep(player1, ticTacToe, scanner);
-        if (!checkPlayerTurn(player1, playerStep, ticTacToe)) {
+        if (!checkPlayerTurn(player1, ticTacToe)) {
             playerStep = takePlayerStep(player1, ticTacToe, scanner);
-            while (!checkPlayerTurn(player1, playerStep, ticTacToe)) {
+            while (!checkPlayerTurn(player1, ticTacToe)) {
                 playerStep = takePlayerStep(player1, ticTacToe, scanner);
             }
         }
@@ -86,27 +88,20 @@ public class TicTacToe {
 
         player1.setName(getPlayersName(scanner, "Enter first player name: "));
         player1.setId(id++);
-        player1.setSymbol(X);
+        player1.setSymbol(SYMBOL_X);
 
         player2.setName(getPlayersName(scanner, "Enter second player name: "));
         player2.setId(id++);
-        player2.setSymbol(O);
+        player2.setSymbol(SYMBOL_O);
 
         players.add(player1);
         players.add(player2);
     }
 
-    public static String[][] initGame() {
-
+    private static void resetGameValue() {
         winner = null;
         gameOver = false;
         counter = 0;
-
-        return new String[][]{
-                {"1", "2", "3"},
-                {"4", "5", "6"},
-                {"7", "8", "9"}
-        };
     }
 
     public static void showGameResult() {
@@ -175,24 +170,24 @@ public class TicTacToe {
     }
 
     private static boolean checkPlayerToWin(Player player, String line) {
-        if (line.equals(XXX)) {
+        if (line.equals(LINE_XXX)) {
             gameOver = true;
-            winner = player.getSymbol().equals(X) ? player : null;
+            winner = player.getSymbol().equals(SYMBOL_X) ? player : null;
             return true;
-        } else if (line.equals(OOO)) {
+        } else if (line.equals(LINE_OOO)) {
             gameOver = true;
-            winner = player.getSymbol().equals(O) ? player : null;
+            winner = player.getSymbol().equals(SYMBOL_O) ? player : null;
             return true;
         }
         return false;
     }
 
-    public static boolean checkPlayerTurn(Player player, String playerStep, String[][] ticTacToe) {
+    public static boolean checkPlayerTurn(Player player, String[][] ticTacToe) {
 
-        switch (playerStep) {
+        switch (player.getStep().getStep()) {
             case "1":
-                if (player.getSymbol().equals(X)) {
-                    if (!ticTacToe[0][0].equals(player.getSymbol()) && !ticTacToe[0][0].equals(O)) {
+                if (player.getSymbol().equals(SYMBOL_X)) {
+                    if (!ticTacToe[0][0].equals(player.getSymbol()) && !ticTacToe[0][0].equals(SYMBOL_O)) {
                         ticTacToe[0][0] = player.getSymbol();
                         counter++;
                         return true;
@@ -200,8 +195,8 @@ public class TicTacToe {
                         System.out.println("already exists choose another slot");
                         return false;
                     }
-                } else if (player.getSymbol().equals(O)) {
-                    if (!ticTacToe[0][0].equals(player.getSymbol()) && !ticTacToe[0][0].equals(X)) {
+                } else if (player.getSymbol().equals(SYMBOL_O)) {
+                    if (!ticTacToe[0][0].equals(player.getSymbol()) && !ticTacToe[0][0].equals(SYMBOL_X)) {
                         ticTacToe[0][0] = player.getSymbol();
                         counter++;
                         return true;
@@ -211,8 +206,8 @@ public class TicTacToe {
                     }
                 }
             case "2":
-                if (player.getSymbol().equals(X)) {
-                    if (!ticTacToe[0][1].equals(player.getSymbol()) && !ticTacToe[0][1].equals(O)) {
+                if (player.getSymbol().equals(SYMBOL_X)) {
+                    if (!ticTacToe[0][1].equals(player.getSymbol()) && !ticTacToe[0][1].equals(SYMBOL_O)) {
                         ticTacToe[0][1] = player.getSymbol();
                         counter++;
                         return true;
@@ -220,8 +215,8 @@ public class TicTacToe {
                         System.out.println("already exists choose another slot");
                         return false;
                     }
-                } else if (player.getSymbol().equals(O)) {
-                    if (!ticTacToe[0][1].equals(player.getSymbol()) && !ticTacToe[0][1].equals(X)) {
+                } else if (player.getSymbol().equals(SYMBOL_O)) {
+                    if (!ticTacToe[0][1].equals(player.getSymbol()) && !ticTacToe[0][1].equals(SYMBOL_X)) {
                         ticTacToe[0][1] = player.getSymbol();
                         counter++;
                         return true;
@@ -231,8 +226,8 @@ public class TicTacToe {
                     }
                 }
             case "3":
-                if (player.getSymbol().equals(X)) {
-                    if (!ticTacToe[0][2].equals(player.getSymbol()) && !ticTacToe[0][2].equals(O)) {
+                if (player.getSymbol().equals(SYMBOL_X)) {
+                    if (!ticTacToe[0][2].equals(player.getSymbol()) && !ticTacToe[0][2].equals(SYMBOL_O)) {
                         ticTacToe[0][2] = player.getSymbol();
                         counter++;
                         return true;
@@ -240,8 +235,8 @@ public class TicTacToe {
                         System.out.println("already exists choose another slot");
                         return false;
                     }
-                } else if (player.getSymbol().equals(O)) {
-                    if (!ticTacToe[0][2].equals(player.getSymbol()) && !ticTacToe[0][2].equals(X)) {
+                } else if (player.getSymbol().equals(SYMBOL_O)) {
+                    if (!ticTacToe[0][2].equals(player.getSymbol()) && !ticTacToe[0][2].equals(SYMBOL_X)) {
                         ticTacToe[0][2] = player.getSymbol();
                         counter++;
                         return true;
@@ -251,8 +246,8 @@ public class TicTacToe {
                     }
                 }
             case "4":
-                if (player.getSymbol().equals(X)) {
-                    if (!ticTacToe[1][0].equals(player.getSymbol()) && !ticTacToe[1][0].equals(O)) {
+                if (player.getSymbol().equals(SYMBOL_X)) {
+                    if (!ticTacToe[1][0].equals(player.getSymbol()) && !ticTacToe[1][0].equals(SYMBOL_O)) {
                         ticTacToe[1][0] = player.getSymbol();
                         counter++;
                         return true;
@@ -260,8 +255,8 @@ public class TicTacToe {
                         System.out.println("already exists choose another slot");
                         return false;
                     }
-                } else if (player.getSymbol().equals(O)) {
-                    if (!ticTacToe[1][0].equals(player.getSymbol()) && !ticTacToe[1][0].equals(X)) {
+                } else if (player.getSymbol().equals(SYMBOL_O)) {
+                    if (!ticTacToe[1][0].equals(player.getSymbol()) && !ticTacToe[1][0].equals(SYMBOL_X)) {
                         ticTacToe[1][0] = player.getSymbol();
                         counter++;
                         return true;
@@ -271,8 +266,8 @@ public class TicTacToe {
                     }
                 }
             case "5":
-                if (player.getSymbol().equals(X)) {
-                    if (!ticTacToe[1][1].equals(player.getSymbol()) && !ticTacToe[1][1].equals(O)) {
+                if (player.getSymbol().equals(SYMBOL_X)) {
+                    if (!ticTacToe[1][1].equals(player.getSymbol()) && !ticTacToe[1][1].equals(SYMBOL_O)) {
                         ticTacToe[1][1] = player.getSymbol();
                         counter++;
                         return true;
@@ -280,8 +275,8 @@ public class TicTacToe {
                         System.out.println("already exists choose another slot");
                         return false;
                     }
-                } else if (player.getSymbol().equals(O)) {
-                    if (!ticTacToe[1][1].equals(player.getSymbol()) && !ticTacToe[1][1].equals(X)) {
+                } else if (player.getSymbol().equals(SYMBOL_O)) {
+                    if (!ticTacToe[1][1].equals(player.getSymbol()) && !ticTacToe[1][1].equals(SYMBOL_X)) {
                         ticTacToe[1][1] = player.getSymbol();
                         counter++;
                         return true;
@@ -291,8 +286,8 @@ public class TicTacToe {
                     }
                 }
             case "6":
-                if (player.getSymbol().equals(X)) {
-                    if (!ticTacToe[1][2].equals(player.getSymbol()) && !ticTacToe[1][2].equals(O)) {
+                if (player.getSymbol().equals(SYMBOL_X)) {
+                    if (!ticTacToe[1][2].equals(player.getSymbol()) && !ticTacToe[1][2].equals(SYMBOL_O)) {
                         ticTacToe[1][2] = player.getSymbol();
                         counter++;
                         return true;
@@ -300,8 +295,8 @@ public class TicTacToe {
                         System.out.println("already exists choose another slot");
                         return false;
                     }
-                } else if (player.getSymbol().equals(O)) {
-                    if (!ticTacToe[1][2].equals(player.getSymbol()) && !ticTacToe[1][2].equals(X)) {
+                } else if (player.getSymbol().equals(SYMBOL_O)) {
+                    if (!ticTacToe[1][2].equals(player.getSymbol()) && !ticTacToe[1][2].equals(SYMBOL_X)) {
                         ticTacToe[1][2] = player.getSymbol();
                         counter++;
                         return true;
@@ -311,8 +306,8 @@ public class TicTacToe {
                     }
                 }
             case "7":
-                if (player.getSymbol().equals(X)) {
-                    if (!ticTacToe[2][0].equals(player.getSymbol()) && !ticTacToe[2][0].equals(O)) {
+                if (player.getSymbol().equals(SYMBOL_X)) {
+                    if (!ticTacToe[2][0].equals(player.getSymbol()) && !ticTacToe[2][0].equals(SYMBOL_O)) {
                         ticTacToe[2][0] = player.getSymbol();
                         counter++;
                         return true;
@@ -320,8 +315,8 @@ public class TicTacToe {
                         System.out.println("already exists choose another slot");
                         return false;
                     }
-                } else if (player.getSymbol().equals(O)) {
-                    if (!ticTacToe[2][0].equals(player.getSymbol()) && !ticTacToe[2][0].equals(X)) {
+                } else if (player.getSymbol().equals(SYMBOL_O)) {
+                    if (!ticTacToe[2][0].equals(player.getSymbol()) && !ticTacToe[2][0].equals(SYMBOL_X)) {
                         ticTacToe[2][0] = player.getSymbol();
                         counter++;
                         return true;
@@ -331,8 +326,8 @@ public class TicTacToe {
                     }
                 }
             case "8":
-                if (player.getSymbol().equals(X)) {
-                    if (!ticTacToe[2][1].equals(player.getSymbol()) && !ticTacToe[2][1].equals(O)) {
+                if (player.getSymbol().equals(SYMBOL_X)) {
+                    if (!ticTacToe[2][1].equals(player.getSymbol()) && !ticTacToe[2][1].equals(SYMBOL_O)) {
                         ticTacToe[2][1] = player.getSymbol();
                         counter++;
                         return true;
@@ -340,8 +335,8 @@ public class TicTacToe {
                         System.out.println("already exists choose another slot");
                         return false;
                     }
-                } else if (player.getSymbol().equals(O)) {
-                    if (!ticTacToe[2][1].equals(player.getSymbol()) && !ticTacToe[2][1].equals(X)) {
+                } else if (player.getSymbol().equals(SYMBOL_O)) {
+                    if (!ticTacToe[2][1].equals(player.getSymbol()) && !ticTacToe[2][1].equals(SYMBOL_X)) {
                         ticTacToe[2][1] = player.getSymbol();
                         counter++;
                         return true;
@@ -351,8 +346,8 @@ public class TicTacToe {
                     }
                 }
             case "9":
-                if (player.getSymbol().equals(X)) {
-                    if (!ticTacToe[2][2].equals(player.getSymbol()) && !ticTacToe[2][2].equals(O)) {
+                if (player.getSymbol().equals(SYMBOL_X)) {
+                    if (!ticTacToe[2][2].equals(player.getSymbol()) && !ticTacToe[2][2].equals(SYMBOL_O)) {
                         ticTacToe[2][2] = player.getSymbol();
                         counter++;
                         return true;
@@ -360,8 +355,8 @@ public class TicTacToe {
                         System.out.println("already exists choose another slot");
                         return false;
                     }
-                } else if (player.getSymbol().equals(O)) {
-                    if (!ticTacToe[2][2].equals(player.getSymbol()) && !ticTacToe[2][2].equals(X)) {
+                } else if (player.getSymbol().equals(SYMBOL_O)) {
+                    if (!ticTacToe[2][2].equals(player.getSymbol()) && !ticTacToe[2][2].equals(SYMBOL_X)) {
                         ticTacToe[2][2] = player.getSymbol();
                         counter++;
                         return true;

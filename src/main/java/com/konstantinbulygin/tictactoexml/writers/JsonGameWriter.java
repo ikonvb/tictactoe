@@ -28,6 +28,4 @@ public class JsonGameWriter implements GameDocumentWriter {
             e.printStackTrace();
         }
     }
-
-
 }
