@@ -31,6 +31,4 @@ public class GameParserJson extends GameParser implements GameDocumentReader {
             showGameResult(gameplay);
         }
     }
-
-
 }

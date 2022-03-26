@@ -1,21 +1,12 @@
 package com.konstantinbulygin.tictactoexml.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class GameResult {
-
     private Player player;
-
-    public GameResult() {
-    }
-
-    public GameResult(Player player) {
-        this.player = player;
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
 }

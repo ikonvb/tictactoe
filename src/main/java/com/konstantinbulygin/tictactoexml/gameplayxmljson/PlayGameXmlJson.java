@@ -8,6 +8,10 @@ import com.konstantinbulygin.tictactoexml.tictactoe.TicTacToe;
 import com.konstantinbulygin.tictactoexml.writers.JsonGameWriter;
 import com.konstantinbulygin.tictactoexml.writers.XmlGameWriter;
 
+import java.util.Arrays;
+
+import static com.konstantinbulygin.tictactoexml.service.GameParser.initGame;
+
 public class PlayGameXmlJson {
 
     /**
@@ -25,9 +29,9 @@ public class PlayGameXmlJson {
          * to start tictactoe game, uncomment this block and comment code block below
          */
         //GameDocumentWriter writer = new JsonGameWriter();
-        GameDocumentWriter writer = new XmlGameWriter();
-        TicTacToe ticTacToe = new TicTacToe();
-        ticTacToe.playTicTacToe(writer);
+//        GameDocumentWriter writer = new XmlGameWriter();
+//        TicTacToe ticTacToe = new TicTacToe();
+//        ticTacToe.playTicTacToe(writer);
         /**
          * to replay the game from xml file, please uncomment desired reader
          * please uncomment this block and comment code block above
