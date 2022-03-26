@@ -20,6 +20,7 @@ import static com.konstantinbulygin.tictactoexml.util.GameUtil.XML_EXTENSION;
 
 @RestController
 @CrossOrigin(origins = "*")
+@RequestMapping(path = "/gameplay", produces = MediaType.APPLICATION_JSON_VALUE)
 public class FileUploadController {
 
     /**
