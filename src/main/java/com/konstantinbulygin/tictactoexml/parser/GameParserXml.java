@@ -2,8 +2,8 @@ package com.konstantinbulygin.tictactoexml.parser;
 
 
 import com.konstantinbulygin.tictactoexml.model.*;
-import com.konstantinbulygin.tictactoexml.service.GameDocumentReader;
-import com.konstantinbulygin.tictactoexml.service.GameParser;
+import com.konstantinbulygin.tictactoexml.repository.GameDocumentReader;
+import com.konstantinbulygin.tictactoexml.util.GameParser;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
@@ -22,11 +22,9 @@ import static com.konstantinbulygin.tictactoexml.util.GameUtil.*;
 public class GameParserXml extends GameParser implements GameDocumentReader {
 
     private final List<Player> players = new ArrayList<>();
-    private final Player player1 = new Player();
-    private final Player player2 = new Player();
     private final GameResult gameResult = new GameResult();
     private final List<Step> steps = new ArrayList<>();
-    private Gameplay gameplay;
+    private final Gameplay gameplay = new Gameplay();
 
     @Override
     public void readGameFile(String fileName) {
@@ -43,8 +41,6 @@ public class GameParserXml extends GameParser implements GameDocumentReader {
     private void tryToReadXml(String fileName) throws XMLStreamException, FileNotFoundException {
         XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
         XMLEventReader reader = xmlInputFactory.createXMLEventReader(new FileInputStream(fileName));
-        gameplay = new Gameplay();
-        Game game = new Game();
 
         while (reader.hasNext()) {
             XMLEvent nextEvent = reader.nextEvent();
@@ -55,34 +51,28 @@ public class GameParserXml extends GameParser implements GameDocumentReader {
                         String name = startElement.getAttributeByName(new QName(NAME)).getValue();
                         String id = startElement.getAttributeByName(new QName(ID)).getValue();
                         String symbol = startElement.getAttributeByName(new QName(SYMBOL)).getValue();
-                        if (player1.getId() == 0 && player1.getName() == null) {
-                            player1.setId(Integer.parseInt(id));
-                            player1.setName(name);
-                            player1.setSymbol(symbol);
-                            players.add(player1);
-                        } else if (player2.getId() == 0 && player2.getName() == null) {
-                            player2.setId(Integer.parseInt(id));
-                            player2.setName(name);
-                            player2.setSymbol(symbol);
-                            players.add(player2);
-                        } else if (player1.getName().equals(name)) {
-                            gameResult.setPlayer(player1);
-                        } else if (player2.getName().equals(name)) {
-                            gameResult.setPlayer(player2);
+                        players.add(new Player(Integer.valueOf(id), name, symbol));
+
+                        if (players.get(0).getPlayerName().equals(name)) {
+                            gameResult.setPlayer(players.get(0));
+                        } else if (players.get(1).getPlayerName().equals(name)) {
+                            gameResult.setPlayer(players.get(1));
                         } else {
                             gameResult.setPlayer(null);
                         }
                         break;
                     case STEP:
                         nextEvent = reader.nextEvent();
-                        String num = startElement.getAttributeByName(new QName(NUM)).getValue();
+                        String stepOrder = startElement.getAttributeByName(new QName(NUM)).getValue();
                         String playerId = startElement.getAttributeByName(new QName(PLAYER_ID)).getValue();
-                        String slot = nextEvent.asCharacters().getData();
-                        steps.add(new Step(num, playerId, slot));
+                        String stepCoordinate = nextEvent.asCharacters().getData();
+                        steps.add(new Step(Integer.valueOf(playerId), stepOrder, stepCoordinate));
                         break;
                 }
             }
         }
+
+        Game game = new Game();
         game.setSteps(steps);
         gameplay.setGame(game);
         gameplay.setGameResult(gameResult);

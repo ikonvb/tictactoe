@@ -3,8 +3,9 @@ package com.konstantinbulygin.tictactoexml.parser;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.konstantinbulygin.tictactoexml.model.Gameplay;
-import com.konstantinbulygin.tictactoexml.service.GameDocumentReader;
-import com.konstantinbulygin.tictactoexml.service.GameParser;
+import com.konstantinbulygin.tictactoexml.repository.GameDocumentReader;
+import com.konstantinbulygin.tictactoexml.util.GameParser;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.io.Reader;

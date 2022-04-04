@@ -1,8 +1,5 @@
 package com.konstantinbulygin.tictactoexml.restapi.controllers;
 
-import com.konstantinbulygin.tictactoexml.parser.GameParserJson;
-import com.konstantinbulygin.tictactoexml.parser.GameParserXml;
-import com.konstantinbulygin.tictactoexml.service.GameDocumentReader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +28,7 @@ public class FileUploadController {
     public ResponseEntity<String> loadFile(@RequestParam("file") MultipartFile file) {
 
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
+
         if (fileName.contains(XML_EXTENSION) || fileName.contains(JSON_EXTENSION)) {
             File convertFile = new File(fileName);
             try {
@@ -41,16 +39,6 @@ public class FileUploadController {
                     FileOutputStream fileOutputStream = new FileOutputStream(convertFile);
                     fileOutputStream.write(file.getBytes());
                     fileOutputStream.close();
-                    if (fileName.contains(XML_EXTENSION)) {
-                        System.out.println("===== Replay from XML file =====");
-                        GameDocumentReader reader = new GameParserXml();
-                        reader.readGameFile(convertFile.toString());
-                    }
-                    if (fileName.contains(JSON_EXTENSION)) {
-                        System.out.println("===== Replay from XML file =====");
-                        GameDocumentReader reader = new GameParserJson();
-                        reader.readGameFile(convertFile.toString());
-                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();

@@ -1,14 +1,40 @@
 package com.konstantinbulygin.tictactoexml.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+import javax.persistence.*;
+
+@Getter
+@Setter
+@Entity
+@Table(name = "steps")
 public class Step {
-    private String num;
-    private String playerId;
-    private String step;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "step_id")
+    private Integer stepId;
+
+    @Column(name = "player_id")
+    private Integer playerId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "game")
+    private Game game;
+
+    @Column(name = "step_ordinal")
+    private String stepOrder;
+
+    @Column(name = "step_coordinate")
+    private String stepCoordinate;
+
+    public Step(Integer playerId, String stepOrder, String stepCoordinate) {
+        this.playerId = playerId;
+        this.stepOrder = stepOrder;
+        this.stepCoordinate = stepCoordinate;
+    }
+
+    public Step() {
+    }
 }
