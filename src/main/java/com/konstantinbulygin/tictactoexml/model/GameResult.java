@@ -1,12 +1,31 @@
 package com.konstantinbulygin.tictactoexml.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+import javax.persistence.*;
+
+@Getter
+@Setter
+@Entity
+@Table(name = "game_result")
 public class GameResult {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "game_result_id")
+    private Integer gameResultId;
+
+    @OneToOne
+    private Game game;
+
+    @OneToOne
     private Player player;
+
+    public GameResult(Player player) {
+        this.player = player;
+    }
+
+    public GameResult() {
+    }
 }

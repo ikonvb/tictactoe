@@ -2,126 +2,13 @@ package com.konstantinbulygin.tictactoexml.tictactoe;
 
 import com.konstantinbulygin.tictactoexml.model.Player;
 import com.konstantinbulygin.tictactoexml.model.Step;
-import com.konstantinbulygin.tictactoexml.service.GameDocumentWriter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
-
-import static com.konstantinbulygin.tictactoexml.service.GameParser.initGame;
 import static com.konstantinbulygin.tictactoexml.util.GameUtil.*;
 
 public class TicTacToe {
 
     public static Player winner;
-    private static String yesOrNot = "y";
-    private static boolean gameOver;
     private static int counter = 0;
-    private static int gameTry = 1;
-    private static int id = 1;
-
-    public void playTicTacToe(GameDocumentWriter writer) {
-        Player player1 = new Player();
-        Player player2 = new Player();
-
-        Scanner scanner = null;
-
-        while (yesOrNot.equalsIgnoreCase("y")) {
-
-            List<Step> steps = new ArrayList<>();
-            List<Player> players = new ArrayList<>();
-
-            scanner = new Scanner(System.in);
-
-            resetGameValue();
-            String[][] ticTacToe = initGame();
-
-            initPlayers(player1, player2, scanner, players);
-
-            while (!gameOver) {
-                getPlayerStepAndCheck(player1, scanner, steps, ticTacToe);
-                if (checkWinner(ticTacToe, player1)) {
-                    break;
-                }
-                getPlayerStepAndCheck(player2, scanner, steps, ticTacToe);
-                if (checkWinner(ticTacToe, player2)) {
-                    break;
-                }
-            }
-
-            showGameBoard(ticTacToe);
-            showGameResult();
-            writer.writeGameResult(players, steps, gameTry, winner);
-            endGame(scanner);
-            gameTry++;
-        }
-        assert scanner != null;
-        scanner.close();
-    }
-
-    private void getPlayerStepAndCheck(Player player1, Scanner scanner, List<Step> steps, String[][] ticTacToe) {
-        String playerStep;
-        playerStep = takePlayerStep(player1, ticTacToe, scanner);
-        if (!checkPlayerTurn(player1, ticTacToe)) {
-            playerStep = takePlayerStep(player1, ticTacToe, scanner);
-            while (!checkPlayerTurn(player1, ticTacToe)) {
-                playerStep = takePlayerStep(player1, ticTacToe, scanner);
-            }
-        }
-        steps.add(new Step(String.valueOf(counter), String.valueOf(player1.getId()), playerStep));
-    }
-
-    private static void endGame(Scanner scanner) {
-        System.out.println("Do you want to play again?");
-        System.out.println("Please enter Y or N");
-        yesOrNot = scanner.next();
-
-        while (!(yesOrNot.equalsIgnoreCase("y") || yesOrNot.equalsIgnoreCase("n"))) {
-            System.out.println("Do you want to play again?");
-            System.out.println("Please enter Y or N");
-            yesOrNot = scanner.next();
-        }
-    }
-
-    private static void initPlayers(Player player1, Player player2, Scanner scanner, List<Player> players) {
-
-        player1.setName(getPlayersName(scanner, "Enter first player name: "));
-        player1.setId(id++);
-        player1.setSymbol(SYMBOL_X);
-
-        player2.setName(getPlayersName(scanner, "Enter second player name: "));
-        player2.setId(id++);
-        player2.setSymbol(SYMBOL_O);
-
-        players.add(player1);
-        players.add(player2);
-    }
-
-    private static void resetGameValue() {
-        winner = null;
-        gameOver = false;
-        counter = 0;
-    }
-
-    public static void showGameResult() {
-        if (winner == null) {
-            System.out.println(STRING_GAME_OVER);
-            System.out.println(STRING_DRAW);
-        } else {
-            System.out.println(STRING_GAME_OVER);
-            System.out.println(STRING_WINNER + winner.getName());
-        }
-    }
-
-    public static String takePlayerStep(Player player, String[][] ticTacToe, Scanner scanner) {
-        String playerStep;
-        showGameBoard(ticTacToe);
-        System.out.println(player.getName() + " your symbol is " + player.getSymbol());
-        System.out.print("Please choose a slot where do you want to go:");
-        playerStep = scanner.next();
-        return playerStep;
-    }
 
     public static boolean checkWinner(String[][] ticTacToe, Player player) {
         String line;
@@ -163,7 +50,6 @@ public class TicTacToe {
         }
         if (counter == 9) {
             winner = null;
-            gameOver = true;
             return true;
         }
         return false;
@@ -171,20 +57,18 @@ public class TicTacToe {
 
     private static boolean checkPlayerToWin(Player player, String line) {
         if (line.equals(LINE_XXX)) {
-            gameOver = true;
             winner = player.getSymbol().equals(SYMBOL_X) ? player : null;
             return true;
         } else if (line.equals(LINE_OOO)) {
-            gameOver = true;
             winner = player.getSymbol().equals(SYMBOL_O) ? player : null;
             return true;
         }
         return false;
     }
 
-    public static boolean checkPlayerTurn(Player player, String[][] ticTacToe) {
+    public static boolean checkPlayerTurn(Player player, Step step, String[][] ticTacToe) {
 
-        switch (player.getStep().getStep()) {
+        switch (step.getStepCoordinate()) {
             case "1":
                 if (player.getSymbol().equals(SYMBOL_X)) {
                     if (!ticTacToe[0][0].equals(player.getSymbol()) && !ticTacToe[0][0].equals(SYMBOL_O)) {
@@ -367,23 +251,5 @@ public class TicTacToe {
                 }
         }
         return false;
-    }
-
-    public static void showGameBoard(String[][] ticTacToe) {
-        System.out.println("Game board looks like: ");
-        for (String[] arr : ticTacToe) {
-            System.out.println(Arrays.toString(arr));
-        }
-        System.out.println();
-    }
-
-    public static String getPlayersName(Scanner scanner, String s) {
-        System.out.println(s);
-        String playerName = scanner.nextLine().trim().toLowerCase();
-        while (playerName.isEmpty()) {
-            System.out.println(s);
-            playerName = scanner.nextLine().trim().toLowerCase();
-        }
-        return playerName;
     }
 }

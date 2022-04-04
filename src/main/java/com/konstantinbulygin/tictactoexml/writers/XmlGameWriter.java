@@ -2,8 +2,7 @@ package com.konstantinbulygin.tictactoexml.writers;
 
 import com.konstantinbulygin.tictactoexml.model.Player;
 import com.konstantinbulygin.tictactoexml.model.Step;
-import com.konstantinbulygin.tictactoexml.service.GameDocumentWriter;
-import org.springframework.stereotype.Component;
+import com.konstantinbulygin.tictactoexml.repository.GameDocumentWriter;
 
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -25,7 +24,6 @@ import java.util.List;
 
 import static com.konstantinbulygin.tictactoexml.util.GameUtil.*;
 
-@Component
 public class XmlGameWriter implements GameDocumentWriter {
 
     @Override
@@ -41,8 +39,8 @@ public class XmlGameWriter implements GameDocumentWriter {
 
             for (Player player : players) {
                 writer.writeStartElement(PLAYER);
-                writer.writeAttribute(ID, String.valueOf(player.getId()));
-                writer.writeAttribute(NAME, String.valueOf(player.getName()));
+                writer.writeAttribute(ID, String.valueOf(player.getPlayerId()));
+                writer.writeAttribute(NAME, String.valueOf(player.getPlayerName()));
                 writer.writeAttribute(SYMBOL, String.valueOf(player.getSymbol()));
                 writer.writeEndElement();
             }
@@ -50,9 +48,9 @@ public class XmlGameWriter implements GameDocumentWriter {
             writer.writeStartElement(GAME);
             for (Step step : steps) {
                 writer.writeStartElement(STEP);
-                writer.writeAttribute(NUM, step.getNum());
-                writer.writeAttribute(PLAYER_ID, step.getPlayerId());
-                writer.writeCharacters(step.getStep());
+                writer.writeAttribute(NUM, step.getStepOrder());
+                writer.writeAttribute(PLAYER_ID, String.valueOf(step.getPlayerId()));
+                writer.writeCharacters(step.getStepCoordinate());
                 writer.writeEndElement();
             }
             writer.writeEndElement();
@@ -66,8 +64,8 @@ public class XmlGameWriter implements GameDocumentWriter {
                 for (Player player : players) {
                     if (player == winner) {
                         writer.writeStartElement(PLAYER);
-                        writer.writeAttribute(ID, String.valueOf(player.getId()));
-                        writer.writeAttribute(NAME, String.valueOf(player.getName()));
+                        writer.writeAttribute(ID, String.valueOf(player.getPlayerId()));
+                        writer.writeAttribute(NAME, String.valueOf(player.getPlayerName()));
                         writer.writeAttribute(SYMBOL, String.valueOf(player.getSymbol()));
                         writer.writeEndElement();
                     }
