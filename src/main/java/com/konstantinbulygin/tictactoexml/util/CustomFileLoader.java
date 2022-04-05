@@ -1,4 +1,4 @@
-package com.konstantinbulygin.tictactoexml.model.restapi;
+package com.konstantinbulygin.tictactoexml.util;
 
 import com.konstantinbulygin.tictactoexml.exceptions.WrongFileFormatException;
 import org.springframework.http.HttpStatus;
