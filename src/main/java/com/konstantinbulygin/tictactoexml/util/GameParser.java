@@ -1,17 +1,22 @@
 package com.konstantinbulygin.tictactoexml.util;
 
+import com.konstantinbulygin.tictactoexml.exceptions.WrongCoordinateException;
 import com.konstantinbulygin.tictactoexml.model.Gameplay;
 import com.konstantinbulygin.tictactoexml.model.Player;
 import com.konstantinbulygin.tictactoexml.model.Step;
+import com.konstantinbulygin.tictactoexml.service.TicTacToeService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
 import java.util.Objects;
 
-import static com.konstantinbulygin.tictactoexml.tictactoe.TicTacToe.checkPlayerTurn;
 import static com.konstantinbulygin.tictactoexml.util.GameUtil.STRING_DRAW;
 import static com.konstantinbulygin.tictactoexml.util.GameUtil.STRING_WINNER;
 
 public class GameParser {
+
+    @Autowired
+    TicTacToeService ticTacToeService;
 
     public final String[][] ticTacToeField = initGame();
 
@@ -38,7 +43,14 @@ public class GameParser {
         for (Step step : gameplay.getGame().getSteps()) {
             gameplay.getPlayers().stream()
                     .filter(player -> Objects.equals(player.getPlayerId(), step.getPlayerId()))
-                    .filter(player -> checkPlayerTurn(player, step, ticTacToeField))
+                    .filter(player -> {
+                        try {
+                            return ticTacToeService.checkPlayerTurn(player, step, ticTacToeField);
+                        } catch (WrongCoordinateException e) {
+                            e.printStackTrace();
+                        }
+                        return false;
+                    })
                     .forEach(pl -> {
                         System.out.println("step N " + step.getStepOrder() +
                                 " " + pl.getPlayerName() + " goes to " + step.getStepCoordinate());

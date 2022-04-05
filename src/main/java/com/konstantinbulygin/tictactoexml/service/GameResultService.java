@@ -5,6 +5,8 @@ import com.konstantinbulygin.tictactoexml.repository.GameResultRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class GameResultService {
 
@@ -13,5 +15,9 @@ public class GameResultService {
 
     public void save(GameResult gameResult) {
         gameResultRepository.save(gameResult);
+    }
+
+    public List<GameResult> findAll() {
+        return gameResultRepository.findAll();
     }
 }

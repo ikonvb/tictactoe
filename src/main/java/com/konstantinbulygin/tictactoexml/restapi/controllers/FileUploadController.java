@@ -1,5 +1,8 @@
 package com.konstantinbulygin.tictactoexml.restapi.controllers;
 
+import com.konstantinbulygin.tictactoexml.exceptions.WrongFileFormatException;
+import com.konstantinbulygin.tictactoexml.model.restapi.CustomFileLoader;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,32 +23,15 @@ import static com.konstantinbulygin.tictactoexml.util.GameUtil.XML_EXTENSION;
 @RequestMapping(path = "/gameplay", produces = MediaType.APPLICATION_JSON_VALUE)
 public class FileUploadController {
 
+    @Autowired
+    CustomFileLoader customFileLoader;
+
     /**
      * to use this rest controller you have to use postman with POST METHOD
      * upload file to the root directory of the project
      */
     @RequestMapping(value = "/upload", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> loadFile(@RequestParam("file") MultipartFile file) {
-
-        String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
-
-        if (fileName.contains(XML_EXTENSION) || fileName.contains(JSON_EXTENSION)) {
-            File convertFile = new File(fileName);
-            try {
-                if (convertFile.exists()) {
-                    convertFile.delete();
-                }
-                if (convertFile.createNewFile()) {
-                    FileOutputStream fileOutputStream = new FileOutputStream(convertFile);
-                    fileOutputStream.write(file.getBytes());
-                    fileOutputStream.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return new ResponseEntity<>("File is uploaded", HttpStatus.OK);
-        }
-        return new ResponseEntity<>("Wrong file", HttpStatus.NOT_ACCEPTABLE);
+    public ResponseEntity<Object> loadFile(@RequestParam("file") MultipartFile file) throws WrongFileFormatException {
+        return customFileLoader.getObjectResponseEntity(file);
     }
-
 }
